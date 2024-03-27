@@ -1,8 +1,8 @@
 #pragma once
 
 #include "ape.h"
-#include "bass-addon.h"
-#include "tak_deco_lib.h"
+#include <bass-addon.h>
+#include <tak_deco_lib.h>
 
 #pragma comment(lib,"bass.lib")
 

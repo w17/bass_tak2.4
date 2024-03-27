@@ -10,11 +10,13 @@ typedef TtakBool(*BoolVoid_Callback)(void*);
 // TAK IO functions
 TtakBool CanRead(BASSFILE bassFile)
 {
+	(void)bassFile;
 	return tak_True;
 }
 
 TtakBool CanSeek(BASSFILE bassFile)
 {
+	(void)bassFile;
 	return tak_True;
 }
 
@@ -27,6 +29,7 @@ TtakBool Read(BASSFILE bassFile, void *ABuf, TtakInt32 ANum, TtakInt32 *AReadNum
 
 TtakBool Write(BASSFILE bassFile, const void *ABuf, TtakInt32 ANum)
 {
+	(void)bassFile, ABuf, ANum;
 	return tak_False;
 }
 
@@ -43,6 +46,7 @@ TtakBool GetLength(BASSFILE bassFile, TtakInt64 *ALength)
 
 TtakBool always_false(BASSFILE bassFile)
 {
+	(void)bassFile;
 	return tak_False;
 }
 

@@ -131,7 +131,7 @@ int setID3V24Frame(BYTE* buf, int charcode, const char* frameId, const BYTE*pref
 		memcpy(buf + 10, prefix, prefixLen);
 		memcpy(buf + 10 + prefixLen, value, valueLen);
 	}else{
-		buf[10] = charcode; // charcode
+		buf[10] = (BYTE)charcode; // charcode
 		memcpy(buf + 11, prefix, prefixLen);
 		memcpy(buf + 11 + prefixLen, value, valueLen);
 		valueLen++;
@@ -163,13 +163,9 @@ void TakStream::extractID3Tags(){
 
 	tagsize = 10; // initial v2.4 tag size
 	m_id3v2Tag = (BYTE*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, tagsize); //calloc(1,10); // init V2.4 Tag
-	if (m_id3v2Tag == NULL) goto end;
-
 	BYTE* value = (BYTE*)HeapAlloc(GetProcessHeap(), 0, TAG_VALUE_SIZE);
-	if (value == NULL) goto end;
-
 	char* valueAnsi = (char*)HeapAlloc(GetProcessHeap(), 0, TAG_VALUE_SIZE);
-	if (valueAnsi == NULL) goto end;
+	if (m_id3v2Tag == NULL || value == NULL || valueAnsi == NULL) goto end;
 
 	memcpy_s(m_id3v2Tag, 3, "ID3", 3);
 	m_id3v2Tag[3] = 0x04; //Version
@@ -205,7 +201,7 @@ void TakStream::extractID3Tags(){
 		// for v1
 		if (strcmp(tmpl->id3_24frameKey, "TRCK") == 0) {
 			// Do special process for TRCK frame
-			m_id3v1Tag[tmpl->id3_1_pos] = atoi(valueAnsi);
+			m_id3v1Tag[tmpl->id3_1_pos] = (BYTE)atoi(valueAnsi);
 		} else {
 			memcpy(m_id3v1Tag + tmpl->id3_1_pos, valueAnsi, min(readedAnsi, tmpl->id3_1_len));
 		}
@@ -278,6 +274,7 @@ DWORD TakStream::streamProcIntl(BYTE* buffer, DWORD length)
 
 DWORD CALLBACK TakStream::streamProc(HSTREAM handle, void* buffer, DWORD length, void *stream)
 {
+	(void)handle;
 	return ((TakStream*)stream)->streamProcIntl((BYTE*)buffer, length);
 }
 

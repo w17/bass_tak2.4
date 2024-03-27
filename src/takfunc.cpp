@@ -45,11 +45,13 @@ void WINAPI TAK_GetInfo(void* inst, BASS_CHANNELINFO* info)
 // return accepted flags (BASS only uses BASS_SAMPLE_LOOP/BASS_STREAM_AUTOFREE/BASS_STREAM_RESTRATE)
 DWORD WINAPI TAK_SetFlags(HSTREAM handle, DWORD flags)
 {
+	(void)handle;
 	return flags;
 }
 
 QWORD WINAPI TAK_GetPosition(void *inst, QWORD pos, DWORD mode)
 {
+	(void)pos, mode;
 	TakStream* stream = (TakStream*)inst;
 	return stream->getPosition();
 }
@@ -66,6 +68,7 @@ BOOL WINAPI TAK_CanSetPosition(void *inst, QWORD pos, DWORD mode)
 // return the actual resulting position
 QWORD WINAPI TAK_SetPosition(void *inst, QWORD pos, DWORD mode)
 {
+	(void)mode;
 	TakStream* stream=(TakStream*)inst;
 	stream->setPosition(pos);
 	return stream->getPosition();

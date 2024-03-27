@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include "TakStream.h"
 
+const BASS_FUNCTIONS* bassfunc = nullptr;
+
 static const DWORD CREATE_PROC_FLAG_MASK = BASS_SAMPLE_FLOAT | BASS_SAMPLE_SOFTWARE
 	| BASS_SAMPLE_LOOP | BASS_SAMPLE_3D | BASS_SAMPLE_FX
 	| BASS_STREAM_DECODE | BASS_STREAM_AUTOFREE
@@ -9,7 +11,7 @@ static const DWORD CREATE_PROC_FLAG_MASK = BASS_SAMPLE_FLOAT | BASS_SAMPLE_SOFTW
 
 // bass plugin information
 static const BASS_PLUGINFORM pluginforms[] = {
-	{BASS_CTYPE_STREAM, "TAK file", "*.tak"},
+	{BASS_CTYPE_STREAM, "TAK", "*.tak"},
 };
 static const BASS_PLUGININFO plugininfo = {
 	0x02040000, 1, pluginforms
@@ -18,6 +20,7 @@ static const BASS_PLUGININFO plugininfo = {
 // config function - called by BASS_SetConfig/Ptr and BASS_GetConfig/Ptr
 static BOOL CALLBACK ConfigProc(DWORD option, DWORD flags, void *value)
 {
+	(void)option, flags, value;
 	return FALSE;
 }
 
@@ -102,13 +105,15 @@ const void *WINAPI BASSplugin(DWORD face){
 }
 
 BOOL WINAPI DllMain( HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved){
+	(void)lpvReserved;
 	switch(fdwReason){
 		case DLL_PROCESS_ATTACH: //initialize
 			DisableThreadLibraryCalls(hinstDLL);
 			if (HIWORD(BASS_GetVersion())!=BASSVERSION) {
-				MessageBoxA(0,"Incorrect BASS.DLL version ("BASSVERSIONTEXT" is required)","BASS_TAK",MB_ICONERROR);
+				MessageBoxA(0,"Incorrect BASS.DLL version (" BASSVERSIONTEXT " is required)","BASS_TAK",MB_ICONERROR);
 				return FALSE;
 			}
+			GetBassFunc();
 			bassfunc->RegisterPlugin(ConfigProc,PLUGIN_CONFIG_ADD); // register config function for freq/chans options
 			break;
 
