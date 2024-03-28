@@ -258,7 +258,7 @@ DWORD TakStream::streamProcIntl(BYTE* buffer, DWORD length)
 		errorn(BASS_ERROR_MEM);
 	}
 		
-	if(decodedSampleNum < 0){
+	if(decodedSampleNum <= 0){
 		noerrorn(BASS_STREAMPROC_END);
 	}
 

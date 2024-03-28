@@ -1,8 +1,6 @@
 #include "TakStream.h"
 #include "takfunc.h"
-
-// this may cnange.(there's no reason for current value)
-#define BASS_CTYPE_STREAM_TAK	0x12000
+#include "bass_tak.h"
 
 // called by BASS_StreamGetLength - get the stream playback length
 QWORD WINAPI TAK_GetLength(void *inst, DWORD mode)

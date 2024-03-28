@@ -81,7 +81,7 @@
       <ModuleDefinitionFile>bass_tak.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>editbin /nologo /subsystem:Console,$(MinOsVer) /osversion:$(MinOsVer) $(TargetPath) &gt; nul</Command>
+      <Command>editbin /nologo /subsystem:Windows,$(MinOsVer) /osversion:$(MinOsVer) $(TargetPath) &gt; nul</Command>
       <Message>fixing subsystem version: $(MinOsVer)</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -18,8 +18,8 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "FileDescription", "BASS plugin based on tac_deco_lib"
-            VALUE "FileVersion", 2,3,3,0
-            VALUE "InternalName", "bass_tak.dll"
+            VALUE "FileVersion", "2,3,3,0"
+            VALUE "InternalName", "bass_tak"
             VALUE "OriginalFilename", "bass_tak.dll"
             VALUE "ProductVersion", "2,3,3,0"
         END
